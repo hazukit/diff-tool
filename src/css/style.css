@@ -58,7 +58,7 @@ textarea {
     }
 }
 @media (max-width: 767px) {
-    .grid__item + .grid__item {
+    .grid__item + .grid__item{
         margin-top: 20px;
     }
 }
