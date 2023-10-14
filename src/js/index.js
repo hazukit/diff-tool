@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const rightText = decodeURIText(parameters.right);
     document.getElementById('left').innerHTML = leftText;
     document.getElementById('right').innerHTML = rightText;
-    if (left && right) {
+    if (leftText && rightText) {
         displayDiff(leftText, rightText);
     }
 });
