@@ -9,13 +9,12 @@ import { html } from 'diff2html';
  * This function extracts the parameters from the URL query string and returns them as an object.
  * @returns {Object} An object containing the parameters extracted from the URL query string.
  */
-function getParameters(){
-    const url = location.search.substring(1).split('&');
+function getParameters() {
+    const params = new URLSearchParams(location.search);
     const parameter = {};
-    for (let i = 0; url[i]; i++) {
-        const k = url[i].split('=');
-        parameter[k[0]] = k[1];
-    }
+    params.forEach((value, key) => {
+        parameter[key] = value;
+    });
     return parameter;
 }
 
@@ -26,7 +25,12 @@ function getParameters(){
  */
 function decodeURIText(text) {
     if (!text) return '';
-    return decodeURIComponent(text).replace(/\+/g, ' ');
+    try {
+        return decodeURIComponent(text).replace(/\+/g, ' ');
+    } catch (e) {
+        console.error('Error decoding URI text:', e);
+        return '';
+    }
 }
 
 /**
@@ -35,7 +39,7 @@ function decodeURIText(text) {
  * @param {string} right - The right text to be compared.
  */
 function displayDiff(left, right) {
-    const diff = JsDiff.createTwoFilesPatch('diff', 'diff', left, right, '', '');
+    const diff = JsDiff.createTwoFilesPatch('left file', 'right file', left, right, '', '');
     const diffHtml = html(diff, { drawFileList: true, matching: 'lines', outputFormat: 'side-by-side' });
 
     document.getElementById('diffViewer').innerHTML = diffHtml;
@@ -46,8 +50,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const parameters = getParameters();
     const leftText = decodeURIText(parameters.left);
     const rightText = decodeURIText(parameters.right);
-    document.getElementById('left').innerHTML = leftText;
-    document.getElementById('right').innerHTML = rightText;
+    
+    const leftElement = document.getElementById('left');
+    const rightElement = document.getElementById('right');
+    
+    leftElement.textContent = leftText;
+    rightElement.textContent = rightText;
+
     if (leftText && rightText) {
         displayDiff(leftText, rightText);
     }
