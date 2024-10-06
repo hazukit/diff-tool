@@ -1,3 +1,12 @@
+:root {
+    --font-size-base: 1.6rem;
+    --font-size-small: 1.2rem;
+    --primary-color: #375e97;
+    --secondary-color: #888;
+    --padding-base: 20px;
+    --margin-small: 20px;
+    --margin-medium: 40px;
+}
 
 /***************
     base
@@ -15,7 +24,7 @@ html {
 }
 
 body {
-    font-size: 1.6rem;
+    font-size: var(--font-size-base);
     color: #000;
 }
 
@@ -23,12 +32,10 @@ body {
     layout
 ***************/
 main {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 0 var(--padding-base);
     width: 100%;
     max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
 }
 
 textarea {
@@ -38,8 +45,8 @@ textarea {
 }
 
 .caption {
-    font-size: 1.2rem;
-    color: #888;
+    font-size: var(--font-size-small);
+    color: var(--secondary-color);
 }
 
 .grid {
@@ -49,7 +56,7 @@ textarea {
 @media (min-width: 768px) {
     .grid {
         display: grid;
-        gap: 20px;
+        gap: var(--padding-base);
         width: auto;
     }
 
@@ -58,27 +65,38 @@ textarea {
     }
 }
 @media (max-width: 767px) {
-    .grid__item + .grid__item{
-        margin-top: 20px;
+    .grid__item + .grid__item {
+        margin-top: var(--margin-small);
     }
 }
 
-.b-margin-s {
-    margin-bottom: 20px !important;
+.margin-bottom-small {
+    margin-bottom: var(--margin-small) !important;
 }
 
-.b-margin-m {
-    margin-bottom: 40px !important;
+.margin-bottom-medium {
+    margin-bottom: var(--margin-medium) !important;
 }
 
 .submit-button {
     width: 100%;
     padding: 10px;
-    background-color: #375e97;
+    background-color: var(--primary-color);
     color: #fff;
+    display: flex;
     justify-content: center;
     align-items: center;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #2c4a78;
+}
+
+.submit-button:focus {
+    outline: 2px solid #375e97;
+    outline-offset: 2px;
 }

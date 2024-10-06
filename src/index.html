@@ -6,14 +6,13 @@
     <title>Diff Tool</title>
 </head>
 <body>
-<div class="wrapper">
-    <main class="main">
+    <main>
         <h1>Diff Tool</h1>
         <p class="text">簡単なDiffツール</p>
-        <p class="caption b-margin-s">このツールはGETリクエストを使用してデータを送信します。機密情報の入力にご注意ください。</p>
-        <div class="content b-margin-m">
+        <p class="caption margin-bottom-small">このツールはGETリクエストを使用してデータを送信します。機密情報の入力にご注意ください。</p>
+        <div class="content margin-bottom-medium">
             <form action="" method="get">
-                <div class="form-input grid grid--2up b-margin-s">
+                <div class="form-input grid grid--2up margin-bottom-small">
                     <div class="grid__item">
                         <textarea name="left" id="left" rows="20"></textarea>
                     </div>
@@ -21,13 +20,10 @@
                         <textarea name="right" id="right" rows="20"></textarea>
                     </div>
                 </div>
-                <div class="submit-button">
-                    <button type="submit" class="submit-button">Diff</button>
-                </div>
+                <button type="submit" class="submit-button">Diff</button>
             </form>
         </div>
         <div id="diffViewer"></div>
     </main>
-</div>
 </body>
 </html>
