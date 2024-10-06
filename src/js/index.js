@@ -9,7 +9,7 @@ import { html } from 'diff2html';
  * This function extracts the parameters from the URL query string and returns them as an object.
  * @returns {Object} An object containing the parameters extracted from the URL query string.
  */
-function gerParameters(){
+function getParameters(){
     const url = location.search.substring(1).split('&');
     const parameter = {};
     for (let i = 0; url[i]; i++) {
@@ -43,7 +43,7 @@ function displayDiff(left, right) {
 
 // Wait for the DOM to be loaded before executing the code
 document.addEventListener('DOMContentLoaded', function () {
-    const parameters = gerParameters();
+    const parameters = getParameters();
     const leftText = decodeURIText(parameters.left);
     const rightText = decodeURIText(parameters.right);
     document.getElementById('left').innerHTML = leftText;
