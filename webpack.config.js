@@ -13,6 +13,7 @@ module.exports = {
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: isProduction ? '/diff-tool/' : '/', // GitHub Pages用のパスを設定
     clean: true,
   },
   plugins: [
@@ -20,7 +21,7 @@ module.exports = {
       template: './src/index.html',
     }),
     new MiniCssExtractPlugin({
-      filename: isProduction ? '[name].[contenthash].css' : '[name].css',
+      filename: '[name].[contenthash].css',
     }),
     // バンドルサイズ分析ツールを本番環境でのみ使用する
     ...(isProduction ? [new BundleAnalyzerPlugin()] : []),
@@ -46,8 +47,8 @@ module.exports = {
   optimization: {
     minimize: isProduction,
     minimizer: [
-      '...', // 既存のデフォルト圧縮ツール（TerserPluginなど）
-      new CssMinimizerPlugin(), // CSSの圧縮
+      '...',
+      new CssMinimizerPlugin(),
     ],
     splitChunks: {
       chunks: 'all', // コード分割を行い、共通部分を再利用
