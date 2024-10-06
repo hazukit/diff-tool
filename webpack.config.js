@@ -1,18 +1,29 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  devtool: "source-map",
-  mode: 'production',
+  mode: isProduction ? 'production' : 'development',
+  devtool: isProduction ? 'source-map' : 'eval-cheap-module-source-map',
   entry: './src/js/index.js',
   output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, 'dist')
+    filename: '[name].[contenthash].js',
+    path: path.resolve(__dirname, 'dist'),
+    clean: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html'
-    })
+      template: './src/index.html',
+    }),
+    new MiniCssExtractPlugin({
+      filename: isProduction ? '[name].[contenthash].css' : '[name].css',
+    }),
+    // バンドルサイズ分析ツールを本番環境でのみ使用する
+    ...(isProduction ? [new BundleAnalyzerPlugin()] : []),
   ],
   devServer: {
     static: {
@@ -25,8 +36,21 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
-      }
-    ]
-  }
+        use: [
+          isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
+          'css-loader',
+        ],
+      },
+    ],
+  },
+  optimization: {
+    minimize: isProduction,
+    minimizer: [
+      '...', // 既存のデフォルト圧縮ツール（TerserPluginなど）
+      new CssMinimizerPlugin(), // CSSの圧縮
+    ],
+    splitChunks: {
+      chunks: 'all', // コード分割を行い、共通部分を再利用
+    },
+  },
 };
