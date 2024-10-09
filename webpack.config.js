@@ -13,12 +13,12 @@ module.exports = {
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: isProduction ? '/diff-tool/' : '/', // GitHub Pages用のパスを設定
+    publicPath: './',
     clean: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './src/index.html'
     }),
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css',
